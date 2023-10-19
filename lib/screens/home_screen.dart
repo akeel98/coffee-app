@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen>  {
                   left: size.width * 0.05,
                   right: size.width * 0.05,
                 ),
-                child: TabBarView(
+                child:const TabBarView(
                   children: [
                     CappuccinoScreen(),
                     Center(child: Text("Page 2")),
@@ -211,7 +211,7 @@ class HeaderSection extends StatelessWidget {
                   EdgeInsets.only(left: size.width * 0.05),
                   child: Row(
                     children: [
-                      const Icon(Icons.search),
+                      const Icon(Icons.search , color: Colors.grey),
                       SizedBox(width: size.width * 0.02),
                       const Text(
                         "Search Coffee",
@@ -229,7 +229,7 @@ class HeaderSection extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(size.width * 0.5)),
                       color: mainColor),
-                  child: const Icon(Icons.restaurant_menu_outlined),
+                  child: const Icon(Icons.restaurant_menu_outlined, color: Colors.white,),
                 )
               ],
             ),
@@ -279,12 +279,13 @@ class BannersSection extends StatelessWidget {
                 color: Colors.red,
                 borderRadius: BorderRadius.all(
                     Radius.circular(size.width * 0.02))),
-            child: const Text("Promo"),
+            child: const Text("Promo", style: TextStyle(color: Colors.white),),
           ),
           const Text(
             "Buy one get \n one Free",
             style: TextStyle(
               fontSize: 28,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
               backgroundColor: Colors.black,
             ),

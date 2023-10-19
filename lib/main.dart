@@ -1,3 +1,4 @@
+import 'package:coffy_application/screens/Auth%20Screens/signUpScreen.dart';
 import 'package:coffy_application/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         // scaffoldBackgroundColor: Color(0xff000000),
         // brightness: Brightness.dark
       ),
-      home: const WelcomeScreen(),
+      home: const SignUpScreen(),
     );
   }
 }

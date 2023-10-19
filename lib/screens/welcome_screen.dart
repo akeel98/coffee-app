@@ -1,5 +1,6 @@
 import 'package:coffy_application/consts.dart';
 import 'package:coffy_application/screens/home_screen.dart';
+import 'package:coffy_application/screens/mainScreen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -24,29 +25,34 @@ class WelcomeScreen extends StatelessWidget {
           Positioned(
             top: size.height * 0.6,
             height: size.height,
-            left: size.width * 0.18,
-            child: const Column(
-              children: [
-                Text(
-                  "Coffee so good,\n"
-                  "Your taste buds\n"
-                  "Will love it",
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.w600,
+            left: 0,
+            right: 0,
+            child: Container(
+              color: const Color(0xff000000),
+              child: const Column(
+                children: [
+                  Text(
+                    "Coffee so good,\n"
+                    "Your taste buds\n"
+                    "Will love it",
+                    style: TextStyle(
+                      fontSize: 35,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 2),
-                Text(
-                  "The best grain, the finest roast,\nthe powerful flavor",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 12,
+                  SizedBox(height: 2),
+                  Text(
+                    "The best grain, the finest roast,\nthe powerful flavor",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Positioned(
@@ -54,7 +60,7 @@ class WelcomeScreen extends StatelessWidget {
             top: size.height * 0.87,
             child: InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const MainScreen()));
               },
               child: Container(
                   height: size.height * 0.08,

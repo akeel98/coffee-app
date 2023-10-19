@@ -75,7 +75,7 @@ class _CappuccinoScreenState extends State<CappuccinoScreen> {
                         const Icon(Icons.star, color: Colors.amber),
                         Text(
                           "4.8",
-                          style: TextStyle(fontSize: size.width * 0.04),
+                          style: TextStyle(fontSize: size.width * 0.04, color: Colors.white),
                         )
                       ],
                     ),
@@ -119,7 +119,7 @@ class _CappuccinoScreenState extends State<CappuccinoScreen> {
                                     color: mainColor,
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(size.width * 0.02))),
-                                child: const Icon(Icons.add))
+                                child: const Icon(Icons.add, color: Colors.white))
                           ],
                         )
                       ],
