@@ -1,4 +1,5 @@
 import 'package:coffy_application/consts.dart';
+import 'package:coffy_application/repository/Auth/passwordSignUp.dart';
 import 'package:coffy_application/screens/Auth%20Screens/signUpScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,21 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+  bool emailValid(email) {
+    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
+  }
+
+  bool loading = false;
+  bool passObs = true;
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +62,37 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: size.width * 0.03),
                   formField(
-                      size: size, label: 'Email', prefix: Icons.email_outlined),
+                      size: size, label: 'Email', prefix: Icons.email_outlined,
+                    controller: emailController,
+                    validator: (String? val) {
+                      if(val == "" || val!.isEmpty){
+                        return "This Field Can't be Null !!";
+                      }
+                      if(!emailValid(val)){
+                        return "Check Your Email";
+                      }
+                      return null;
+                    },
+                  ),
                   SizedBox(height: size.width * 0.03),
                   formField(
                       size: size,
                       label: 'Password',
                       prefix: Icons.password,
-                      suffix: Icons.remove_red_eye_outlined),
+                      obscureText: passObs,
+                      suffix: passObs == true? Icons.remove_red_eye_outlined : Icons.visibility_off,
+                      suffixOnPressed: (){
+                      setState(() {
+                          passObs = !passObs;
+                        });
+                      },
+                     controller: passwordController,
+                      validator: (String? val) {
+                      if(val == "" || val!.isEmpty){
+                        return "This Field Can't be Null !!";
+                      }
+                    },
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -68,7 +108,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: size.width * 0.03),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      if(_form.currentState!.validate()){
+                        final email = emailController.text.trim();
+                        final password = passwordController.text.trim();
+                        print("###################################");
+                        print(email);
+                        print(password);
+                        print("###################################");
+                        signInWithPassword(context: context, email: email, password: password);
+                      }
+                    },
                     child: Container(
                       width: size.width,
                       height: size.height * 0.055,
@@ -106,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -120,13 +170,20 @@ class _LoginScreenState extends State<LoginScreen> {
     required Size size,
     required String label,
     required IconData prefix,
+    required TextEditingController controller,
+    required FormFieldValidator<String> validator,
     IconData? suffix,
+    Function()? suffixOnPressed,
+    bool obscureText = false,
   }) {
     return TextFormField(
+      controller: controller,
+      validator: validator,
+      obscureText: obscureText,
       decoration: InputDecoration(
         prefixIcon: Icon(prefix),
         prefixIconColor: mainColor,
-        suffixIcon: Icon(suffix),
+        suffixIcon: IconButton(onPressed: suffixOnPressed, icon: Icon(suffix)),
         suffixIconColor: mainColor,
         contentPadding: EdgeInsets.only(
             top: 0,
@@ -137,6 +194,11 @@ class _LoginScreenState extends State<LoginScreen> {
         labelStyle: const TextStyle(
           color: Colors.grey,
         ),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(size.width * 0.03)),
+            borderSide: const BorderSide(
+              color: Colors.grey,
+            )),
         disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(size.width * 0.03)),
             borderSide: const BorderSide(
