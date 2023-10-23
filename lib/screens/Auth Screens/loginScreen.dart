@@ -32,7 +32,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Container(
+      body: loading == true?
+      Center(
+        child: Image.asset("images/loading.gif"),
+      ) :
+      Container(
         width: size.width,
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         child: Form(
@@ -109,15 +113,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: size.width * 0.03),
                   InkWell(
                     onTap: () {
+                      setState(() {
+                        loading = true;
+                      });
                       if(_form.currentState!.validate()){
                         final email = emailController.text.trim();
                         final password = passwordController.text.trim();
-                        print("###################################");
-                        print(email);
-                        print(password);
-                        print("###################################");
                         signInWithPassword(context: context, email: email, password: password);
                       }
+                      setState(() {
+                        loading = false;
+                      });
                     },
                     child: Container(
                       width: size.width,

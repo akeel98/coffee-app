@@ -29,12 +29,14 @@ signInWithPassword({required context, required email, required password})async{
         email: email,
         password: password
     );
-     // Navigator.push(context, MaterialPageRoute(builder: (context)=> const HomeScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> const HomeScreen()));
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
       mySnackBar(context: context, message: 'No user found for that email.');
     } else if (e.code == 'wrong-password') {
       mySnackBar(context: context, message: 'Wrong password provided for that user.');
+    }else if(e.code == "INVALID_LOGIN_CREDENTIALS"){
+      mySnackBar(context: context, message: 'Something went wrong');
     }
   }
 }

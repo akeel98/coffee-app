@@ -42,13 +42,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return loading == true?
-    const Center(
-      child: CircularProgressIndicator(),
-    ) :
-    Scaffold(
+    return Scaffold(
       body: SafeArea(
-        child: Container(
+        child: loading == true?
+         Center(
+          child: Image.asset("images/loading.gif"),
+        ) : Container(
           width: size.width,
           height: size.height,
           padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
@@ -58,7 +57,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 key: _form,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       "Create Account",

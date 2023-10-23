@@ -1,17 +1,44 @@
 import 'package:coffy_application/screens/Auth%20Screens/signUpScreen.dart';
+import 'package:coffy_application/screens/home_screen.dart';
+import 'package:coffy_application/screens/mainScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+   MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+   FirebaseAuth auth = FirebaseAuth.instance;
+
+  bool isLogin = false;
+
+  checkIfLogin()async{
+    auth.authStateChanges().listen((User? user) {
+      if(user != null){
+        setState(() {
+          isLogin = true;
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    checkIfLogin();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,7 +49,7 @@ class MyApp extends StatelessWidget {
         // scaffoldBackgroundColor: Color(0xff000000),
         // brightness: Brightness.dark
       ),
-      home: const SignUpScreen(),
+      home: isLogin == true? MainScreen() : SignUpScreen()
     );
   }
 }
