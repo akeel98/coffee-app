@@ -8,24 +8,24 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp( MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-   MyApp({super.key});
+  MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-   FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   bool isLogin = false;
 
-  checkIfLogin()async{
+  checkIfLogin() async {
     auth.authStateChanges().listen((User? user) {
-      if(user != null){
+      if (user != null && FirebaseAuth.instance.currentUser!.emailVerified) {
         setState(() {
           isLogin = true;
         });
@@ -42,14 +42,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        // scaffoldBackgroundColor: Color(0xff000000),
-        // brightness: Brightness.dark
-      ),
-      home: isLogin == true? MainScreen() : SignUpScreen()
-    );
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          // scaffoldBackgroundColor: Color(0xff000000),
+          // brightness: Brightness.dark
+        ),
+        home: isLogin == true ? MainScreen() : SignUpScreen());
   }
 }

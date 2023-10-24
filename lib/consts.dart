@@ -20,3 +20,4 @@ mySnackBar({required context, required String message}) {
     ..hideCurrentMaterialBanner()
     ..showSnackBar(materialBanner);
 }
+
