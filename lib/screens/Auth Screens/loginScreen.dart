@@ -102,7 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const Expanded(child: SizedBox()),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          final email = emailController.text.trim();
+                          forgotPassword(email: email, context: context);
+                        },
                         child: Text(
                           "Forgot Password?",
                           style: TextStyle(color: mainColor),

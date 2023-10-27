@@ -1,6 +1,7 @@
 import 'package:coffy_application/consts.dart';
 import 'package:coffy_application/screens/tabBarScreens/cappuccino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,7 +10,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>  {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -35,8 +36,8 @@ class _HomeScreenState extends State<HomeScreen>  {
                   dividerColor: Colors.transparent,
                   unselectedLabelColor: Colors.black,
                   labelColor: Colors.white,
-                  indicatorPadding: EdgeInsets.symmetric(
-                      vertical: size.width * 0.015),
+                  indicatorPadding:
+                      EdgeInsets.symmetric(vertical: size.width * 0.015),
                   indicator: BoxDecoration(
                       color: mainColor,
                       borderRadius: BorderRadius.all(
@@ -115,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen>  {
                   left: size.width * 0.05,
                   right: size.width * 0.05,
                 ),
-                child:const TabBarView(
+                child: const TabBarView(
                   children: [
                     CappuccinoScreen(),
                     Center(child: Text("Page 2")),
@@ -135,16 +136,37 @@ class _HomeScreenState extends State<HomeScreen>  {
 }
 
 //Start HeaderSection
-class HeaderSection extends StatelessWidget {
-  const HeaderSection({
-    super.key,
-    required this.size,
-  });
+class HeaderSection extends StatefulWidget {
+  const HeaderSection({Key? key, required Size size}) : super(key: key);
 
-  final Size size;
+  @override
+  State<HeaderSection> createState() => _HeaderSectionState();
+}
+
+class _HeaderSectionState extends State<HeaderSection> {
+  String firstName = '';
+  String lastName = '';
+  String addressOne = '';
+  String addressTwo = '';
+
+  getPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    firstName = prefs.getString("firstName")!;
+    lastName = prefs.getString("lastName")!;
+    addressOne = prefs.getString("addressOne")!;
+    addressTwo = prefs.getString("addressTwo")!;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPrefs();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       height: size.height * 0.15,
       padding: EdgeInsets.only(
@@ -157,19 +179,16 @@ class HeaderSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(
+               SizedBox(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Location",
-                      style: TextStyle(
-                          fontSize: 15, color: Colors.black),
+                    Text("Deliver To $addressOne",
+                      style: const TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     Row(
                       children: [
-                        Text(
-                          "UserName Will Be Here",
+                        Text("$firstName $lastName",
                           style: TextStyle(
                               fontSize: 18,
                               color: Colors.black,
@@ -185,12 +204,11 @@ class HeaderSection extends StatelessWidget {
                 width: size.width * 0.15,
                 height: size.width * 0.15,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(size.width * 0.5)),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(size.width * 0.5)),
                   image: const DecorationImage(
                       image: AssetImage("images/userImage.jpg"),
-                      fit: BoxFit.fill
-                  ),
+                      fit: BoxFit.fill),
                 ),
               )
             ],
@@ -201,22 +219,20 @@ class HeaderSection extends StatelessWidget {
             height: size.height * 0.05,
             decoration: BoxDecoration(
                 color: const Color(0xFF313131),
-                borderRadius: BorderRadius.all(
-                    Radius.circular(size.width * 0.03))),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(size.width * 0.03))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding:
-                  EdgeInsets.only(left: size.width * 0.05),
+                  padding: EdgeInsets.only(left: size.width * 0.05),
                   child: Row(
                     children: [
-                      const Icon(Icons.search , color: Colors.grey),
+                      const Icon(Icons.search, color: Colors.grey),
                       SizedBox(width: size.width * 0.02),
                       const Text(
                         "Search Coffee",
-                        style: TextStyle(
-                            color: Colors.grey, fontSize: 16),
+                        style: TextStyle(color: Colors.grey, fontSize: 16),
                       )
                     ],
                   ),
@@ -227,9 +243,13 @@ class HeaderSection extends StatelessWidget {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(size.width * 0.5)),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(size.width * 0.5)),
                       color: mainColor),
-                  child: const Icon(Icons.restaurant_menu_outlined, color: Colors.white,),
+                  child: const Icon(
+                    Icons.restaurant_menu_outlined,
+                    color: Colors.white,
+                  ),
                 )
               ],
             ),
@@ -239,7 +259,6 @@ class HeaderSection extends StatelessWidget {
     );
   }
 }
-
 //End HeaderSection
 
 //Start BannerSection
@@ -256,13 +275,11 @@ class BannersSection extends StatelessWidget {
     return Container(
       height: size.height * 0.2,
       width: size.width * 0.9,
-      padding: EdgeInsets.only(
-          top: size.width * 0.05, left: size.width * 0.05),
-      margin: EdgeInsets.only(
-          right: size.width * 0.05, left: size.width * 0.05),
+      padding: EdgeInsets.only(top: size.width * 0.05, left: size.width * 0.05),
+      margin:
+          EdgeInsets.only(right: size.width * 0.05, left: size.width * 0.05),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-              Radius.circular(size.width * 0.05)),
+          borderRadius: BorderRadius.all(Radius.circular(size.width * 0.05)),
           image: const DecorationImage(
             image: AssetImage('images/coffee.png'),
             fit: BoxFit.cover,
@@ -273,13 +290,15 @@ class BannersSection extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(bottom: size.width * 0.01),
             padding: EdgeInsets.symmetric(
-                horizontal: size.width * 0.03,
-                vertical: size.width * 0.01),
+                horizontal: size.width * 0.03, vertical: size.width * 0.01),
             decoration: BoxDecoration(
                 color: Colors.red,
-                borderRadius: BorderRadius.all(
-                    Radius.circular(size.width * 0.02))),
-            child: const Text("Promo", style: TextStyle(color: Colors.white),),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(size.width * 0.02))),
+            child: const Text(
+              "Promo",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           const Text(
             "Buy one get \n one Free",
@@ -296,5 +315,3 @@ class BannersSection extends StatelessWidget {
   }
 }
 //End BannerSection
-
-

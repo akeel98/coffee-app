@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Color mainColor = const Color(0xFFC67C4E);
 
-mySnackBar({required context, required String message}) {
+mySnackBar({required context, required String message, required ContentType contentType}) {
   final materialBanner = SnackBar(
     behavior: SnackBarBehavior.floating,
     elevation: 0,
@@ -11,7 +12,7 @@ mySnackBar({required context, required String message}) {
     content: AwesomeSnackbarContent(
       title: 'Error',
       message: message,
-      contentType: ContentType.failure,
+      contentType: contentType,
       inMaterialBanner: false,
     ),
   );
@@ -20,4 +21,6 @@ mySnackBar({required context, required String message}) {
     ..hideCurrentMaterialBanner()
     ..showSnackBar(materialBanner);
 }
+
+
 

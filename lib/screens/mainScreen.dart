@@ -1,5 +1,6 @@
 import 'package:coffy_application/consts.dart';
 import 'package:coffy_application/screens/home_screen.dart';
+import 'package:coffy_application/screens/personalScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
@@ -30,7 +31,9 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: screens[_bottomNavIndex]!, //destination screen
       floatingActionButton: FloatingActionButton(
-        onPressed: () {  },
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>personalScreen()));
+        },
         backgroundColor: mainColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(size.width * 0.5))
