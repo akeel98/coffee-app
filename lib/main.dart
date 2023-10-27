@@ -1,4 +1,5 @@
 import 'package:coffy_application/screens/Auth%20Screens/signUpScreen.dart';
+import 'package:coffy_application/screens/Auth%20Screens/signUpScreen.dart';
 import 'package:coffy_application/screens/home_screen.dart';
 import 'package:coffy_application/screens/mainScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -49,6 +50,8 @@ class _MyAppState extends State<MyApp> {
           // scaffoldBackgroundColor: Color(0xff000000),
           // brightness: Brightness.dark
         ),
-        home: isLogin == true ? MainScreen() : SignUpScreen());
+        home: isLogin == true ? const MainScreen() : const SignUpScreen()
+    );
+
   }
 }

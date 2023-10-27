@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Color mainColor = const Color(0xFFC67C4E);
+Color mainColor = const Color(0xFF001E36);
+Color lightBackground = const Color(0xFFE7EFEC);
+Color darkBackground = const Color(0xFF2E3239);
 
 mySnackBar({required context, required String message, required ContentType contentType}) {
   final materialBanner = SnackBar(
