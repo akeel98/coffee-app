@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool passObs = true;
   bool loading = false;
-  bool isDarkMode = true;
+  bool isDarkMode = false;
 
   bool emailValid(email) {
     return RegExp(
@@ -150,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         onPressed: () {
                                           final email =
                                               emailController.text.trim();
-                                          forgotPassword(
+                                          FirebaseAuthServices().forgotPassword(
                                               email: email, context: context);
                                         },
                                         child: Text(
@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             emailController.text.trim();
                                         final password =
                                             passwordController.text.trim();
-                                        signInWithPassword(
+                                        FirebaseAuthServices().signInWithPassword(
                                             context: context,
                                             email: email,
                                             password: password);

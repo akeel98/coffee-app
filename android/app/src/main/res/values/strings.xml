@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">coffee app</string>
+    <string name="facebook_app_id">792338772577729</string>
+    <string name="fb_login_protocol_scheme">fbfddf4b1a99cd2fb8619e32a823768bfc</string>
+    <string name="facebook_client_token">7a5c163180d6d7b40d9249f4bf2e87c8</string>
+
+</resources>

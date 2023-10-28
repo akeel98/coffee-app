@@ -12,7 +12,20 @@
           "package_name": "com.example.coffy_application"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "492084862374-9gbk988gku8t86e9t4kidfjg57jom15b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.coffy_application",
+            "certificate_hash": "7f10d13640df64bfba16c495740d95318dc35c38"
+          }
+        },
+        {
+          "client_id": "492084862374-947t355fpsvd2rftsjtckbtrsmkspk8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBvC9cv09j_jFsx7WQ9Uke7q1Mfv_Xhbik"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "492084862374-947t355fpsvd2rftsjtckbtrsmkspk8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

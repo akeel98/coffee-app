@@ -1,3 +1,5 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:coffy_application/screens/mainScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -237,10 +239,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             emailController.text.trim();
                                         String password =
                                             passwordController.text.trim();
-                                        signUpWithPassword(
-                                            email: email,
-                                            password: password,
-                                            context: context);
+                                        FirebaseAuthServices()
+                                            .signUpWithPassword(
+                                                email: email,
+                                                password: password,
+                                                context: context);
 
                                         //Save Informations to SharedPrefs
                                         final SharedPreferences prefs =
@@ -314,49 +317,79 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: size.width * 0.12,
-                            height: size.width * 0.12,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: backgroundColor,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(size.width * 0.5)),
-                                boxShadow: [
-                                  BoxShadow(
-                                      offset: const Offset(28, 28),
-                                      color: isDarkMode
-                                          ? const Color(0xFF23262A)
-                                          : const Color(0xFFA7A9AF),
-                                      blurRadius: 30.0)
-                                ]),
-                            child: FaIcon(
-                              FontAwesomeIcons.facebookF,
-                              size: size.width * 0.06,
-                              color: isDarkMode ? Colors.white : Colors.black,
+                          InkWell(
+                            onTap: ()async{
+                              try{
+                               await FirebaseAuthServices().signInWithFacebook();
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> const MainScreen(),),);
+                              }catch(e){
+                                mySnackBar(context: context, message: "Something Went Wrong", contentType: ContentType.failure);
+                              }
+
+                            },
+                            child: Container(
+                              width: size.width * 0.12,
+                              height: size.width * 0.12,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: backgroundColor,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(size.width * 0.5)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: const Offset(28, 28),
+                                        color: isDarkMode
+                                            ? const Color(0xFF23262A)
+                                            : const Color(0xFFA7A9AF),
+                                        blurRadius: 30.0)
+                                  ]),
+                              child: FaIcon(
+                                FontAwesomeIcons.facebookF,
+                                size: size.width * 0.06,
+                                color: isDarkMode ? Colors.white : Colors.black,
+                              ),
                             ),
                           ),
                           SizedBox(width: size.width * 0.02),
-                          Container(
-                            width: size.width * 0.12,
-                            height: size.width * 0.12,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: backgroundColor,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(size.width * 0.5)),
-                                boxShadow: [
-                                  BoxShadow(
-                                      offset: const Offset(28, 28),
-                                      color: isDarkMode
-                                          ? const Color(0xFF23262A)
-                                          : const Color(0xFFA7A9AF),
-                                      blurRadius: 30.0)
-                                ]),
-                            child: FaIcon(
-                              FontAwesomeIcons.google,
-                              size: size.width * 0.06,
-                              color: isDarkMode ? Colors.white : Colors.black,
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                loading = true;
+                              });
+                              FirebaseAuthServices()
+                                  .signInWithGoogle()
+                                  .whenComplete(() {
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => const MainScreen()));
+                                  },
+                              );
+                            },
+                            child: Container(
+                              width: size.width * 0.12,
+                              height: size.width * 0.12,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: backgroundColor,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(size.width * 0.5)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: const Offset(28, 28),
+                                        color: isDarkMode
+                                            ? const Color(0xFF23262A)
+                                            : const Color(0xFFA7A9AF),
+                                        blurRadius: 30.0)
+                                  ]),
+                              child: FaIcon(
+                                FontAwesomeIcons.google,
+                                size: size.width * 0.06,
+                                color: isDarkMode ? Colors.white : Colors.black,
+                              ),
                             ),
                           ),
                           SizedBox(width: size.width * 0.02),
@@ -410,11 +443,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
       decoration: InputDecoration(
         suffixIcon: IconButton(
-            onPressed: suffixOnPressed,
-            icon: Icon(
-              suffix,
-              color: isDarkMode ? Colors.white : mainColor,
-            ),
+          onPressed: suffixOnPressed,
+          icon: Icon(
+            suffix,
+            color: isDarkMode ? Colors.white : mainColor,
+          ),
         ),
         suffixIconColor: mainColor,
         contentPadding: EdgeInsets.only(

@@ -1,3 +1,4 @@
+
 import 'package:coffy_application/screens/Auth%20Screens/signUpScreen.dart';
 import 'package:coffy_application/screens/Auth%20Screens/signUpScreen.dart';
 import 'package:coffy_application/screens/home_screen.dart';
@@ -33,25 +34,19 @@ class _MyAppState extends State<MyApp> {
       }
     });
   }
-
   @override
   void initState() {
     checkIfLogin();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Coffee App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
-          // scaffoldBackgroundColor: Color(0xff000000),
-          // brightness: Brightness.dark
         ),
-        home: isLogin == true ? const MainScreen() : const SignUpScreen()
-    );
-
+        home: isLogin == true ? const MainScreen() : const SignUpScreen());
   }
 }
